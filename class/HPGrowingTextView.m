@@ -266,20 +266,30 @@
 
 - (void)refreshHeight
 {
-    //size of content, so we can set the frame of self
     NSInteger newSizeH = [self measureHeight] + _contentInset.top + _contentInset.bottom;
-    if (newSizeH < _minHeight + _contentInset.top + _contentInset.bottom || !_internalTextView.hasText) {
-        newSizeH = _minHeight + _contentInset.top + _contentInset.bottom; //not smalles than minHeight
-    }
-    else if (_maxHeight && newSizeH > _maxHeight)
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
     {
-        newSizeH = _maxHeight; // not taller than maxHeight
+        // Size the content to min and max height.
+        CGFloat topInternalContentInset = self.internalTextView.contentInset.top;
+        CGFloat bottomInternalContentInset = self.internalTextView.contentInset.bottom;
+        
+        newSizeH += topInternalContentInset + bottomInternalContentInset;
+    }
+    
+    if (newSizeH < _minHeight + _contentInset.top + _contentInset.bottom || !_internalTextView.hasText) {
+        newSizeH = _minHeight + _contentInset.top + _contentInset.bottom;
+    }
+    
+    if (_maxHeight && newSizeH > _maxHeight)
+    {
+        newSizeH = _maxHeight;
     }
     
     if (_internalTextView.frame.size.height != newSizeH)
     {
-        // [fixed] Pasting too much text into the view failed to fire the height change,
-        // thanks to Gwynne <http://blog.darkrainfall.org/>
+        // [Fixed] Pasting too much text into the view failed to fire the height change,
+        // thanks to Gwynne <http://blog.darkrainfall.org/>.
         if (newSizeH <= _maxHeight)
         {
             if(_animateHeightChange)
@@ -313,8 +323,9 @@
             else
             {
                 [self resizeTextView:newSizeH];
-                // [fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
-                // thanks to Gwynne <http://blog.darkrainfall.org/>
+                
+                // [Fixed] The growingTextView:didChangeHeight: delegate method was not called at all when not animating height changes.
+                // Thanks to Gwynne <http://blog.darkrainfall.org/>.
                 
                 if ([_delegate respondsToSelector:@selector(growingTextView:didChangeHeight:)])
                 {
@@ -334,7 +345,7 @@
     }
     
     // Scroll to caret (needed on iOS7).
-    if ([self respondsToSelector:@selector(snapshotViewAfterScreenUpdates:)])
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
     {
         [self performSelector:@selector(resetScrollPositionForIOS7) withObject:nil afterDelay:0.1f];
     }
