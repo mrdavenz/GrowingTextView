@@ -122,7 +122,7 @@
 		_textView.minNumberOfLines = 1;
 		_textView.maxNumberOfLines = 6;
 		// textView.maxHeight = 200.0f; // you can also set the maximum height in points with maxHeight
-		_textView.returnKeyType = UIReturnKeyGo; //just as an example
+		_textView.returnKeyType = UIReturnKeyDone; //just as an example
 		_textView.font = [UIFont fontWithName:@"HelveticaNeue" size:17];
 		//_internalTextView.font = [UIFont fontWithName:@"Helvetica" size:13];
 		_textView.delegate = self;
@@ -135,9 +135,16 @@
 	return _textView;
 }
 
+- (BOOL)growingTextViewShouldReturn:(HPGrowingTextView *)growingTextView
+{
+	[self.textView resignFirstResponder];
+	
+	return YES;
+}
+
 - (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height
 {
-	
+	NSLog(@"Height changed");
 }
 
 //- (void) loadView

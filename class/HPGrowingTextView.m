@@ -101,7 +101,8 @@
     _internalTextView.text = @"-";
 	_internalTextView.textColor = [UIColor whiteColor];
 	_internalTextView.backgroundColor = [UIColor clearColor];
-	
+	[_internalTextView setKeyboardAppearance: UIKeyboardAppearanceDark];
+	[_internalTextView setKeyboardType: UIKeyboardTypeTwitter];
     _internalTextView.contentMode = UIViewContentModeRedraw;
     [self addSubview:_internalTextView];
     
@@ -675,6 +676,8 @@
             }
         }
     }
+	
+	NSLog(@"text: %@", atext);
     
     return YES;
 }
