@@ -99,6 +99,9 @@
     _internalTextView.contentInset = UIEdgeInsetsZero;
     _internalTextView.showsHorizontalScrollIndicator = NO;
     _internalTextView.text = @"-";
+	_internalTextView.textColor = [UIColor whiteColor];
+	_internalTextView.backgroundColor = [UIColor clearColor];
+	
     _internalTextView.contentMode = UIViewContentModeRedraw;
     [self addSubview:_internalTextView];
     

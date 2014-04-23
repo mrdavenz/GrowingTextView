@@ -36,7 +36,7 @@
 	if(self){
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(keyboardWillShow:) 
-													 name:UIKeyboardWillShowNotification 
+													 name:UIKeyboardWillShowNotification
 												   object:nil];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self 
@@ -71,9 +71,6 @@
     textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     textView.backgroundColor = [UIColor whiteColor];
     textView.placeholder = @"Type to see the textView grow!";
-    
-    // textView.text = @"test\n\ntest";
-	// textView.animateHeightChange = NO; //turns off animation
 
     [self.view addSubview:containerView];
 	
