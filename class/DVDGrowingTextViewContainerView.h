@@ -13,6 +13,14 @@ typedef enum : NSUInteger {
     ViewClosedTypeBottom,
 } ViewClosedType;
 
+@protocol DVDGrowingTextViewContainerViewProtocol <NSObject>
+
+@optional
+
+- (void) didChangeHeight:(float)height;
+
+@end
+
 @interface DVDGrowingTextViewContainerView : UIView
 <HPGrowingTextViewDelegate>
 {
@@ -20,6 +28,7 @@ typedef enum : NSUInteger {
 }
 
 @property (nonatomic, strong) HPGrowingTextView *textView;
+@property (weak) id <DVDGrowingTextViewContainerViewProtocol> delegate;
 
 + (id) growingTextViewContainerView : (UIViewController *) viewController isFirstResponder : (BOOL) isFirstResponder;
 

@@ -145,12 +145,10 @@
 - (void)growingTextView:(HPGrowingTextView *)growingTextView didChangeHeight:(float)height
 {
 	NSLog(@"Height changed");
+	if ([self.delegate respondsToSelector: @selector(didChangeHeight:)]) {
+		[self.delegate didChangeHeight: height];
+	}
 }
-
-//- (void) loadView
-//{
-//
-//}
 
 - (void) doneWriting
 {
@@ -169,6 +167,7 @@
 - (void) addToViewController : (UIViewController *) viewController isFirstResponder : (BOOL) isFirstResponder
 {
 	hasBeenAddedToAViewController = YES;
+	
 	__viewController = viewController;
 	
 	switch (viewClosedType) {
@@ -225,7 +224,7 @@
     
 	// get a rect for the textView frame
 	CGRect containerFrame = self.frame;
-    containerFrame.origin.y = __viewController.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height) + 25.f;
+    containerFrame.origin.y = __viewController.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height); //+ 25.f;
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
 	[UIView setAnimationBeginsFromCurrentState:YES];
@@ -245,8 +244,7 @@
 	
 	// get a rect for the textView frame
 	CGRect containerFrame = self.frame;
-    containerFrame.origin.y = __viewController.view.bounds.size.height - containerFrame.size.height;
-	//containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    containerFrame.origin.y = __viewController.view.bounds.size.height - containerFrame.size.height - 20.f;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
