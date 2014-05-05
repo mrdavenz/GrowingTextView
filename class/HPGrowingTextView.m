@@ -677,7 +677,7 @@
         }
     }
 	
-	NSLog(@"text: %@", atext);
+//	NSLog(@"text: %@", atext);
     
     return YES;
 }
