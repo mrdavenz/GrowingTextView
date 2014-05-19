@@ -33,7 +33,7 @@
 	CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
 	
 	DVDGrowingTextViewContainerView *object = [[DVDGrowingTextViewContainerView alloc] initWithFrame:CGRectMake(0.f,
-																												appFrame.size.height - 40.f,
+																												appFrame.size.height - 40.f-100,
 																												320.f,
 																												40.f)];
 	
@@ -174,7 +174,7 @@
 		case ViewClosedTypeDefault:
 		{
 			self.frame = CGRectMake(0.f,
-									viewController.view.frame.size.height,
+									viewController.view.frame.size.height-40,
 									320.f,
 									40.f);
 			break;
@@ -182,7 +182,7 @@
 		case ViewClosedTypeBottom:
 		{
 			self.frame = CGRectMake(0.f,
-									viewController.view.frame.size.height - 40.f,
+									viewController.view.frame.size.height - 40.f-40,
 									320.f,
 									40.f);
 			break;
@@ -206,7 +206,9 @@
 	[self.textView resignFirstResponder];
 }
 //Code from Brett Schumann
--(void) keyboardWillShow:(NSNotification *)note{
+-(void) keyboardWillShow:(NSNotification *)note
+{
+	self.textView.userInteractionEnabled = YES;
     // get keyboard size and loctaion
 	CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
@@ -238,13 +240,15 @@
 	[UIView commitAnimations];
 }
 
--(void) keyboardWillHide:(NSNotification *)note{
+-(void) keyboardWillHide:(NSNotification *)note
+{
+	self.textView.userInteractionEnabled = NO;
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
 	
 	// get a rect for the textView frame
 	CGRect containerFrame = self.frame;
-    containerFrame.origin.y = __viewController.view.bounds.size.height - containerFrame.size.height - 20.f;
+    containerFrame.origin.y = __viewController.view.bounds.size.height - containerFrame.size.height - 20.f-40;
 	
 	// animations settings
 	[UIView beginAnimations:nil context:NULL];
